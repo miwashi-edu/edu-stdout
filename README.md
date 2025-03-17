@@ -29,6 +29,27 @@ install(TARGETS greeter DESTINATION bin)
 EOF
 ```
 
+### ./lib/CmakeLists.txt !heredoc
+
+```bash
+cat > ./lib/CmakeLists.txt << EOF
+add_library(greetings STATIC greetings.cpp)
+target_include_directories(greetings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+install(TARGETS greetings DESTINATION lib)
+install(FILES greetings.h DESTINATION include)
+EOF
+```
+
+### ./src/CmakeLists.txt !heredoc
+
+```bash
+cat > ./src/CmakeLists.txt << EOF
+add_executable(greeter main.cpp)
+target_link_libraries(greeter PRIVATE greetings)
+target_include_directories(greeter PRIVATE ${CMAKE_INSTALL_PREFIX}/include)
+EOF
+```
+
 ### lib/greetings.h !heredoc
 
 ```bash
