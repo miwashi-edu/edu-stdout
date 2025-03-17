@@ -1,45 +1,6 @@
 # edu-stdout
 
-[C++ Wikipedia](https://en.wikipedia.org/wiki/C%2B%2B)  
-[C++ History](https://en.cppreference.com/w/cpp/language/history)
-
-## Premises
-
-## Login
-
-```
-ssh [user]@localhost -p 2222
-# ctrl-d to end session
-```
-
 ## Instructions
-
-### scaffold project
-
-```bash
-cd ~
-cd ws
-mkdir -p edu-stdin
-cd edu-stdin
-mkdir src
-mkdir include
-mkdir tests
-mkdir lib
-mkdir build
-touch CMakeLists.txt
-touch ./src/CMakeLists.txt
-touch ./src/main.cpp
-```
-
-### Set up git
-
-```bash
-curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/C%2B%2B.gitignore
-git init
-git branch -m main # if you didn't change git to use main instead of maste
-git add .
-git commit -m "Initial Commit"
-```
 
 ### CMakeLists.txt (Project Structure) !heredoc
 
@@ -47,23 +8,29 @@ git commit -m "Initial Commit"
 cat > CMakeLists.txt << EOF
 cmake_minimum_required(VERSION 3.16)
 project(myproject LANGUAGES CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${CMAKE_SOURCE_DIR}/bin)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Add the greetings library
+add_subdirectory(lib)
+
+# Add the source directory (greeter executable)
 add_subdirectory(src)
 
-install(TARGETS hello DESTINATION bin)
+# Install the greeter binary
+install(TARGETS greeter DESTINATION bin)
 EOF
 ```
 
 ### src/CMakeLists.txt (Executable) !heredoc
 
 ```bash
-cat > ./src/CMakeLists.txt << EOF
-add_executable(hello main.cpp)
-EOF
+add_executable(greeter main.cpp)
+target_link_libraries(greeter PRIVATE greetings)
+target_include_directories(greeter PRIVATE ${CMAKE_INSTALL_PREFIX}/include)
 ```
 
 ### src/main.cpp !heredoc
@@ -72,18 +39,29 @@ EOF
 cat > ./src/main.cpp << EOF
 #include <iostream>
 #include <string>
+#include <cstdlib>
+#include "greetings.h"
 
-int main() {
+int main(int argc, char* argv[]) {
     std::string name;
-    while (true) {
-        std::cout << "What is your name? ";
-        std::getline(std::cin, name);
-        if (name == "quit") {
-            break;
+    std::cout << "What is your name? ";
+    std::getline(std::cin, name);
+
+    if (argc < 2) {
+        greet_user(name);
+    } else {
+        std::string arg = argv[1];
+        if (arg == "--uppercase") {
+            uppercase_greet_user(name);
+        } else if (arg == "--verbose") {
+            verbose_greet_user(name);
+        } else {
+            std::cerr << "Unknown option: " << arg << std::endl;
+            std::cerr << "Usage: " << argv[0] << " [--uppercase | --verbose]" << std::endl;
+            return EXIT_FAILURE;
         }
-        std::cout << "Hello, " << name << "!" << std::endl;
     }
-    return 0;
+    return EXIT_SUCCESS;
 }
 EOF
 ```
