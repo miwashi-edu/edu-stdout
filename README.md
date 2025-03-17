@@ -10,17 +10,10 @@ cmake_minimum_required(VERSION 3.16)
 project(myproject LANGUAGES CXX)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Add the greetings library
 add_subdirectory(lib)
-
-# Add the source directory (greeter executable)
 add_subdirectory(src)
-
-# Install the greeter binary
 install(TARGETS greeter DESTINATION bin)
 EOF
 ```
@@ -28,9 +21,11 @@ EOF
 ### src/CMakeLists.txt (Executable) !heredoc
 
 ```bash
+cat > ./src/CMakeLists.txt << EOF
 add_executable(greeter main.cpp)
 target_link_libraries(greeter PRIVATE greetings)
 target_include_directories(greeter PRIVATE ${CMAKE_INSTALL_PREFIX}/include)
+EOF
 ```
 
 ### src/main.cpp !heredoc
@@ -40,7 +35,7 @@ cat > ./src/main.cpp << EOF
 #include <iostream>
 #include <string>
 #include <cstdlib>
-#include "greetings.h"
+#include "../lib/greetings.h"
 
 int main(int argc, char* argv[]) {
     std::string name;
