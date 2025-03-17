@@ -131,14 +131,14 @@ make -C build
 ```bash
 cd ~
 cd ws
-rm -rf myproject
+rm -rf edu-stdin
 ```
 
 #### Reset to commit
 ```bash
 cd ~
 cd ws
-cd myproject
+cd edu-stdin
 git reset --hard
 git clean -df
 ```
