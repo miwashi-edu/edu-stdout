@@ -14,6 +14,11 @@ ssh [user]@localhost -p 2222
 
 ## Instructions
 
+```bash
+touch ./lib/greetings.h
+touch ./lib/greetings.cpp
+```
+
 ### ./lib/CMakeLists.txt < !heredoc
 
 ```bash
@@ -61,6 +66,44 @@ add_subdirectory(src)
 
 # Install all three executables
 install(TARGETS hello1 hello2 hello3 DESTINATION bin)
+EOF
+```
+
+### ./lib/greetings.h < !heredoc
+
+```bash
+cat > ./lib/greetings.h << EOF
+#ifndef GREETINGS_H
+#define GREETINGS_H
+
+#include <string>
+
+void greet_user(const std::string& name);
+void verbose_greet_user(const std::string& name);
+void uppercase_greet_user(const std::string& name);
+
+#endif // GREETINGS_H
+EOF
+```
+
+### ./lib/greetings.cpp < !heredoc
+
+```bash
+cat > ./lib/greetings.cpp << EOF
+#include <iostream>
+#include "greetings.h"
+
+void greet_user(const std::string& name) {
+    std::cout << "Hello, " << name << "!" << std::endl;
+}
+
+void verbose_greet_user(const std::string& name) {
+    std::cout << "Greetings, esteemed " << name << "! It is a pleasure to present you with this message: Hello!" << std::endl;
+}
+
+void uppercase_greet_user(const std::string& name) {
+    std::cout << "HELLO, " << name << "!" << std::endl;
+}
 EOF
 ```
 
