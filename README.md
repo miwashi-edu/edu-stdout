@@ -96,7 +96,7 @@ cat > ./src/main.c << EOF
 #include <string.h>
 
 int main() {
-    char name[100];  // Buffer for name input
+    char name[100];
 
     while (1) {
         printf("What is your name? ");
