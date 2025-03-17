@@ -14,10 +14,10 @@ touch ./lib/greetings.h
 touch ./lib/greetings.cpp
 ```
 
-### lib/CmakeLists.txt !heredoc
+### CmakeLists.txt !heredoc
 
 ```bash
-cat > ./lib/CmakeLists.txt << EOF
+cat > CmakeLists.txt << EOF
 cmake_minimum_required(VERSION 3.16)
 project(myproject LANGUAGES CXX)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
