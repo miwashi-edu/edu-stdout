@@ -11,7 +11,7 @@ cd ~
 cd ws
 cd edu-stdin
 touch ./lib/greetings.h
-touch ./lib/greetings.c
+touch ./lib/greetings.cpp
 ```
 
 ### lib/greetings.h !heredoc
