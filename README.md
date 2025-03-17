@@ -14,28 +14,98 @@ ssh [user]@localhost -p 2222
 
 ## Instructions
 
+### ./lib/CMakeLists.txt < !heredoc
+
 ```bash
 cat > ./lib/CMakeLists.txt << EOF
-add_library(greetings STATIC greetings.cpp)
+add_executable(hello1 main1.cpp)
+add_executable(hello2 main2.cpp)
+add_executable(hello3 main3.cpp)
 
-# Ensure the header is found by targets using the library
-target_include_directories(greetings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(hello1 PRIVATE greetings)
+target_link_libraries(hello2 PRIVATE greetings)
+target_link_libraries(hello3 PRIVATE greetings)
+
+target_include_directories(hello1 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
+target_include_directories(hello2 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
+target_include_directories(hello3 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 EOF
 ```
+
+### CMakeLists.txt < !heredoc
 
 ```bash
 cat > CMakeLists.txt << EOF
 cmake_minimum_required(VERSION 3.16)
 project(myproject LANGUAGES CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${CMAKE_SOURCE_DIR}/bin)
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Add the greetings library
 add_subdirectory(lib)
+
+# Add the source directory (hello1, hello2, hello3 executables)
 add_subdirectory(src)
 
-install(TARGETS hello1 hello2 DESTINATION bin) # Added install target
+# Install all three executables
+install(TARGETS hello1 hello2 hello3 DESTINATION bin)
+EOF
+```
+
+### ./src/main1.cpp < !heredoc
+
+```bash
+cat > ./src/main1.cpp << EOF
+#include <iostream>
+#include "greetings.h"
+
+int main() {
+    std::string name;
+    std::cout << "What is your name? ";
+    std::getline(std::cin, name);
+
+    greet_user(name);
+    return 0;
+}
+EOF
+```
+
+### ./src/main2.cpp < !heredoc
+
+```bash
+cat > ./src/main2.cpp << EOF
+#include <iostream>
+#include "greetings.h"
+
+int main() {
+    std::string name;
+    std::cout << "What is your name? ";
+    std::getline(std::cin, name);
+
+    verbose_greet_user(name);
+    return 0;
+}
+EOF
+```
+
+### ./src/main3.cpp < !heredoc
+
+```bash
+cat > ./src/main3.cpp << EOF
+#include <iostream>
+#include "greetings.h"
+
+int main() {
+    std::string name;
+    std::cout << "What is your name? ";
+    std::getline(std::cin, name);
+
+    uppercase_greet_user(name);
+    return 0;
+}
 EOF
 ```
 
