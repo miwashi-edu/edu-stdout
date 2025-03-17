@@ -32,17 +32,20 @@ EOF
 
 ```bash
 cat > ./src/CMakeLists.txt << EOF
+# Create three executable targets
 add_executable(hello1 main1.cpp)
 add_executable(hello2 main2.cpp)
 add_executable(hello3 main3.cpp)
 
-target_link_libraries(hello1 PRIVATE greetings)
-target_link_libraries(hello2 PRIVATE greetings)
-target_link_libraries(hello3 PRIVATE greetings)
-
+# Ensure the source files can find greetings.h
 target_include_directories(hello1 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_include_directories(hello2 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_include_directories(hello3 PRIVATE ${CMAKE_SOURCE_DIR}/lib)
+
+# Link each executable with the greetings library
+target_link_libraries(hello1 PRIVATE greetings)
+target_link_libraries(hello2 PRIVATE greetings)
+target_link_libraries(hello3 PRIVATE greetings)
 EOF
 ```
 
@@ -91,7 +94,7 @@ EOF
 ```bash
 cat > ./lib/greetings.cpp << EOF
 #include <iostream>
-#include "greetings.h"
+#include "../lib/greetings.h"
 
 void greet_user(const std::string& name) {
     std::cout << "Hello, " << name << "!" << std::endl;
@@ -112,7 +115,7 @@ EOF
 ```bash
 cat > ./src/main1.cpp << EOF
 #include <iostream>
-#include "greetings.h"
+#include "../lib/greetings.h"
 
 int main() {
     std::string name;
@@ -130,7 +133,7 @@ EOF
 ```bash
 cat > ./src/main2.cpp << EOF
 #include <iostream>
-#include "greetings.h"
+#include "../lib/greetings.h"
 
 int main() {
     std::string name;
@@ -148,7 +151,7 @@ EOF
 ```bash
 cat > ./src/main3.cpp << EOF
 #include <iostream>
-#include "greetings.h"
+#include "../lib/greetings.h"
 
 int main() {
     std::string name;
@@ -166,7 +169,9 @@ EOF
 ```bash
 cmake -B build
 make -C build
-./bin/hello
+./build/hello1
+./build/hello2
+./build/hello3
 ```
 
 ### Reset to commit or delete myproject
