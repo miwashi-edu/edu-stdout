@@ -61,39 +61,12 @@ int main(int argc, char* argv[]) {
 EOF
 ```
 
-### src/main.c !heredoc
-
-```bash
-cat > ./src/main.c << EOF
-#include <stdio.h>
-#include <string.h>
-
-int main() {
-    char name[100];
-
-    while (1) {
-        printf("What is your name? ");
-        fgets(name, sizeof(name), stdin);
-
-        name[strcspn(name, "\n")] = 0;
-
-        if (strcmp(name, "quit") == 0) {
-            break;
-        }
-        printf("Hello, %s!\n", name);
-    }
-
-    return 0;
-}
-EOF
-```
-
 ### Build the project
 
 ```bash
 cmake -B build
 make -C build
-./bin/hello
+./build/greeter
 ```
 
 ### Reset to commit or delete myproject
