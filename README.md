@@ -1,16 +1,6 @@
 # edu-stdout
 
-[C++ Wikipedia](https://en.wikipedia.org/wiki/C%2B%2B)  
-[C++ History](https://en.cppreference.com/w/cpp/language/history)
-
 ## Premises
-
-## Login
-
-```
-ssh [user]@localhost -p 2222
-# ctrl-d to end session
-```
 
 ## Instructions
 
@@ -19,98 +9,44 @@ ssh [user]@localhost -p 2222
 ```bash
 cd ~
 cd ws
-mkdir -p edu-stdin
 cd edu-stdin
-mkdir src
-mkdir include
-mkdir tests
-mkdir lib
-mkdir build
-touch CMakeLists.txt
-touch ./src/CMakeLists.txt
-touch ./src/main.cpp
+touch ./lib/greetings.h
+touch ./lib/greetings.c
 ```
 
-### Set up git
+### lib/greetings.h !heredoc
 
 ```bash
-curl -o .gitignore https://raw.githubusercontent.com/github/gitignore/main/C%2B%2B.gitignore
-git init
-git branch -m main # if you didn't change git to use main instead of maste
-git add .
-git commit -m "Initial Commit"
-```
+cat > ./lib/greetings.h << EOF
+#ifndef GREETINGS_H
+#define GREETINGS_H
 
-### CMakeLists.txt (Project Structure) !heredoc
-
-```bash
-cat > CMakeLists.txt << EOF
-cmake_minimum_required(VERSION 3.16)
-project(myproject LANGUAGES CXX)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY \${CMAKE_SOURCE_DIR}/bin)
-
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-add_subdirectory(src)
-
-install(TARGETS hello DESTINATION bin)
-EOF
-```
-
-### src/CMakeLists.txt (Executable) !heredoc
-
-```bash
-cat > ./src/CMakeLists.txt << EOF
-add_executable(hello main.cpp)
-EOF
-```
-
-### src/main.cpp !heredoc
-
-```bash
-cat > ./src/main.cpp << EOF
-#include <iostream>
 #include <string>
 
-int main() {
-    std::string name;
-    while (true) {
-        std::cout << "What is your name? ";
-        std::getline(std::cin, name);
-        if (name == "quit") {
-            break;
-        }
-        std::cout << "Hello, " << name << "!" << std::endl;
-    }
-    return 0;
-}
-EOF
-```
+void greet_user(const std::string& name);
+void verbose_greet_user(const std::string& name);
+void uppercase_greet_user(const std::string& name);
 
-### src/main.c !heredoc
+#endif // GREETINGS_H
+EOF
+
+### lib/greetings.cpp !heredoc
 
 ```bash
-cat > ./src/main.c << EOF
-#include <stdio.h>
-#include <string.h>
+cat > ./lib/greetings.cpp << EOF
+#include <iostream>
+#include "greetings.h"
 
-int main() {
-    char name[100];
+void greet_user(const std::string& name) {
+    std::cout << "Hello, " << name << "!" << std::endl;
+}
 
-    while (1) {
-        printf("What is your name? ");
-        fgets(name, sizeof(name), stdin);
+void verbose_greet_user(const std::string& name) {
+    std::cout << "Greetings, esteemed " << name << "! It is a pleasure to present you with this message: Hello!" << std::endl;
+}
 
-        name[strcspn(name, "\n")] = 0;
-
-        if (strcmp(name, "quit") == 0) {
-            break;
-        }
-        printf("Hello, %s!\n", name);
-    }
-
-    return 0;
+void uppercase_greet_user(const std::string& name) {
+    std::cout << "HELLO, " << name << "!" << std::endl;
 }
 EOF
 ```
@@ -129,14 +65,14 @@ make -C build
 ```bash
 cd ~
 cd ws
-rm -rf myproject
+rm -rf edu-stdin
 ```
 
 #### Reset to commit
 ```bash
 cd ~
 cd ws
-cd myproject
+cd edu-stdin
 git reset --hard
 git clean -df
 ```
