@@ -1,6 +1,7 @@
 # edu-stdout
 
-> Hello World with cmake
+[C++ Wikipedia](https://en.wikipedia.org/wiki/C%2B%2B)  
+[C++ History](https://en.cppreference.com/w/cpp/language/history)
 
 ## Premises
 
