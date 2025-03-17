@@ -117,7 +117,7 @@ EOF
 ```bash
 cmake -B build
 make -C build
-./build/hello
+./bin/greeter
 ```
 
 ### Reset to commit or delete myproject
