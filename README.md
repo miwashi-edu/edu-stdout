@@ -88,7 +88,9 @@ EOF
 ```bash
 cmake -B build
 make -C build
-./bin/greeting
+./bin/greeter
 sudo make -C build install
-greeting
+greeter --uppercase
+greeter --verbose
+greeter --help
 ```
