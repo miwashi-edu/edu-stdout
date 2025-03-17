@@ -19,8 +19,8 @@ ssh [user]@localhost -p 2222
 ```bash
 cd ~
 cd ws
-mkdir -p myproject
-cd myproject
+mkdir -p edu-stdin
+cd edu-stdin
 mkdir src
 mkdir include
 mkdir tests
@@ -71,10 +71,45 @@ EOF
 ```bash
 cat > ./src/main.cpp << EOF
 #include <iostream>
-using namespace std;
+#include <string>
 
 int main() {
-    cout << "Hello, World!\n";
+    std::string name;
+    while (true) {
+        std::cout << "What is your name? ";
+        std::getline(std::cin, name);
+        if (name == "quit") {
+            break;
+        }
+        std::cout << "Hello, " << name << "!" << std::endl;
+    }
+    return 0;
+}
+EOF
+```
+
+### src/main.c !heredoc
+
+```bash
+cat > ./src/main.c << EOF
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    char name[100];  // Buffer for name input
+
+    while (1) {
+        printf("What is your name? ");
+        fgets(name, sizeof(name), stdin);
+
+        name[strcspn(name, "\n")] = 0;
+
+        if (strcmp(name, "quit") == 0) {
+            break;
+        }
+        printf("Hello, %s!\n", name);
+    }
+
     return 0;
 }
 EOF
