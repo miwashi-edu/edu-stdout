@@ -86,5 +86,3 @@ cd myproject
 git reset --hard
 git clean -df
 ```
-
-# Repeat until dead or know it --> scaffold project
