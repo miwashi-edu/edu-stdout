@@ -29,6 +29,8 @@ void uppercase_greet_user(const std::string& name);
 
 #endif // GREETINGS_H
 EOF
+```
+
 
 ### lib/greetings.cpp !heredoc
 
