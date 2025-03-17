@@ -90,6 +90,8 @@ EOF
 
 ### src/main.c !heredoc
 
+> The c file isn't used, it is here for comparison with .cpp.
+
 ```bash
 cat > ./src/main.c << EOF
 #include <stdio.h>
