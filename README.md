@@ -18,6 +18,15 @@ ssh [user]@localhost -p 2222
 
 ```bash
 cat > ./lib/CMakeLists.txt << EOF
+add_library(greetings STATIC greetings.cpp)
+target_include_directories(greetings PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+EOF
+```
+
+### ./src/CMakeLists.txt < !heredoc
+
+```bash
+cat > ./src/CMakeLists.txt << EOF
 add_executable(hello1 main1.cpp)
 add_executable(hello2 main2.cpp)
 add_executable(hello3 main3.cpp)
