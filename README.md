@@ -1,6 +1,6 @@
 # edu-stdout
 
-## If ssh has stopped
+## If ssh has stopped in docker
 
 ```bash
 docker exec -it rpi5-dev bash -c "service ssh restart"
