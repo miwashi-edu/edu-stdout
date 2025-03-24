@@ -15,7 +15,7 @@ cat > ./src/main.cpp << EOF
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "./lib/greetings.h"
+#include "../lib/greetings.h"
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
