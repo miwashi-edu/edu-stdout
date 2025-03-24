@@ -92,7 +92,7 @@ EOF
 ### ./lib/greetings.cpp < !heredoc
 
 ```bash
-cat > ./lib/greetings.cpp << EOF
+cat > ../lib/greetings.cpp << EOF
 #include <iostream>
 #include "../lib/greetings.h"
 
