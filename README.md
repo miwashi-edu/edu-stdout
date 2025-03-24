@@ -1,6 +1,11 @@
 # edu-stdout
 
-### CMakeLists.txt (Project Structure) !heredoc
+## If ssh has stopped
+
+```bash
+docker exec -it rpi5-dev bash -c "service ssh restart"
+```
+
 
 ### src/main.cpp !heredoc
 
