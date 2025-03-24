@@ -8,7 +8,7 @@ cat > ./src/main.cpp << EOF
 #include <string>
 #include <sstream>
 #include <unistd.h> // for isatty, fileno
-#include "./lib/greetings.h"
+#include "../lib/greetings.h"
 #include "CLI/CLI.hpp"
 
 int main(int argc, char* argv[]) {
